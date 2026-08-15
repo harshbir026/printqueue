@@ -1,0 +1,23 @@
+## .NET build output
+bin/
+obj/
+publish/
+TestResults/
+*.user
+*.suo
+
+## SQLite databases created at runtime
+*.db
+*.db-shm
+*.db-wal
+
+## IDE
+.vs/
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+## Local secrets
+appsettings.Development.local.json
+*.env
