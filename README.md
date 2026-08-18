@@ -191,7 +191,3 @@ az webapp create --name <YOUR-APP-NAME> --resource-group printqueue-rg \
 - Per-printer queue depth limits and priority ordering
 
 ---
-
-## License
-
-MIT
