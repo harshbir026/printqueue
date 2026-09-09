@@ -7,6 +7,11 @@ the whole thing ships with unit + integration tests and a GitHub Actions pipelin
 
 [![CI/CD](https://github.com/harshbir026/printqueue/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/harshbir026/printqueue/actions/workflows/ci-cd.yml)
 
+**This is a fork** of [nikhilggarg/printqueue](https://github.com/nikhilggarg/printqueue).
+The upstream repository published the design spec, `.gitignore`, MIT license, and an empty
+`PrintQueue.sln`. This fork implements the API, EF Core + SQLite persistence, tests, and CI
+described in that spec.
+
 ---
 
 ## Why this design
@@ -187,3 +192,9 @@ az webapp create --name <YOUR-APP-NAME> --resource-group printqueue-rg \
 - Per-printer queue depth limits and priority ordering
 
 ---
+
+## License
+
+MIT. Original design spec © 2026 Nikhil Garg; implementation in this fork © 2026 Harshbir Singh.
+See [LICENSE](LICENSE).
+
