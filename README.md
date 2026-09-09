@@ -5,7 +5,7 @@ A backend service for managing print jobs across registered printers, built with
 explicit state machine, submission is idempotent so client retries can't double-print, and
 the whole thing ships with unit + integration tests and a GitHub Actions pipeline.
 
-[![CI/CD](https://github.com/USERNAME/printqueue/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/USERNAME/printqueue/actions/workflows/ci-cd.yml)
+[![CI/CD](https://github.com/harshbir026/printqueue/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/harshbir026/printqueue/actions/workflows/ci-cd.yml)
 
 ---
 
@@ -90,7 +90,7 @@ Requires the [.NET 8 SDK](https://dotnet.microsoft.com/download).
 ```bash
 dotnet restore
 dotnet build
-dotnet test                                  # 54 tests
+dotnet test                                  # 72 tests
 dotnet run --project src/PrintQueue.Api      # http://localhost:5000
 ```
 
@@ -101,7 +101,7 @@ SQLite file (`printqueue.db`). No database server needed.
 
 ## Tests
 
-**54 tests, all passing.** Three layers:
+**72 tests, all passing.** Four layers:
 
 | File | Layer | Covers |
 |---|---|---|
@@ -110,11 +110,7 @@ SQLite file (`printqueue.db`). No database server needed.
 | `SqliteProviderTests` | Service + real SQLite | Query translation, ordering, DB-level unique index, persistence round-trip |
 | `ApiIntegrationTests` | Full HTTP pipeline | Status codes, model validation, ProblemDetails, end-to-end lifecycle |
 
-`SqliteProviderTests` exists for a specific reason. The queries originally ordered by a
-`DateTimeOffset` column: EF Core's in-memory provider sorts that happily, but SQLite throws
-`NotSupportedException`. The suite was green while `GET /api/jobs` returned 500 against the real
-database. Timestamps are now `DateTime` (UTC), and anything that depends on query translation is
-tested against the provider the app actually ships with.
+`SqliteProviderTests` exists because EF Core's in-memory provider can hide SQLite translation bugs. In particular, ordering by `DateTimeOffset` works in-memory but throws `NotSupportedException` on SQLite. Timestamps are `DateTime` (UTC) so `GET /api/jobs` ordering is tested against the provider the app actually ships with.
 
 Integration tests use `WebApplicationFactory<Program>` with the SQLite provider swapped for
 EF Core InMemory, so they exercise real routing, model binding and middleware without
